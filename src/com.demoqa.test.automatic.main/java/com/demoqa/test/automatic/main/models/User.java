@@ -12,10 +12,6 @@ public class User {
 		this.username = username;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
 	public String getCompleteName() {
 		return completeName;
 	}
@@ -50,15 +46,11 @@ public class User {
 	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+
 	public String getLastName() {
 		return lastName;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+
 	public boolean equals(Object u){
 		if(u instanceof User){
 			User user=(User)u;

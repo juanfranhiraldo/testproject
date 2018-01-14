@@ -24,7 +24,7 @@ public class Test {
 	private static WebDriver driver;
 	private final String[] names={"Jan van Dam", "Chack Norris", "Klark n Kent", "John Daw", "Bat Man", "Tim Los", "Dave o Core", "Pay Pal", "Lazy Cat", "Jack & Johnes"};
 	private final List<User> users=User.returnListOfUsers(names);
-	private static List<User> addedUsers=new ArrayList<User>();
+	private static final List<User> addedUsers=new ArrayList<User>();
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		ChromeOptions options = new ChromeOptions();
