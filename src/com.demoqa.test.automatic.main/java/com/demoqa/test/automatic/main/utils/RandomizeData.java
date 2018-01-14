@@ -72,7 +72,7 @@ public class RandomizeData {
 		String res,secondPart,termination;
 		String firstPart="";
 		StringBuilder wordBuilder=new StringBuilder();
-		int lengthFirstPart=randomSeed.nextInt(10)+4;
+		int lengthFirstPart=randomSeed.nextInt(10)+5;
 		String letters=LOWER_CASE+LOWER_CASE.toUpperCase();
 		String lettersAndNumbers=letters+NUMBERS;
 		firstPart=firstPart+letters.charAt(randomSeed.nextInt(letters.length()));

@@ -25,8 +25,8 @@ public class Test {
 	private final String[] names={"Jan van Dam", "Chack Norris", "Klark n Kent", "John Daw", "Bat Man", "Tim Los", "Dave o Core", "Pay Pal", "Lazy Cat", "Jack & Johnes"};
 	private final List<User> users=User.returnListOfUsers(names);
 	private static List<User> addedUsers=new ArrayList<User>();
-	@Before
-	public void setUpBeforeClass() {
+	@BeforeClass
+	public static void setUpBeforeClass() {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--start-maximized");
 		WebDriverManager.chromedriver().setup();
@@ -34,8 +34,8 @@ public class Test {
 	    
 	}
 
-	@After
-	public void tearDownAfterClass()  {
+	@AfterClass
+	public static void tearDownAfterClass()  {
 		driver.close();
 	}
 
@@ -43,7 +43,6 @@ public class Test {
 	public void testConnection() {
 		driver.get(" http://demoqa.com/registration/");
 		Assert.assertTrue(driver.getCurrentUrl().equals("http://demoqa.com/registration/"));
-        registerUsers();
 	}
     @org.junit.Test
     public void registerUsers() {
