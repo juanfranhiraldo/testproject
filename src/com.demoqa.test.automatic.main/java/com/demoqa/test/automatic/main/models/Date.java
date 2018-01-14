@@ -1,7 +1,7 @@
-package models;
+package com.demoqa.test.automatic.main.models;
 
 public class Date {
-   int day,month,year;
+   private int day,month,year;
 
 public int getDay() {
 	return day;

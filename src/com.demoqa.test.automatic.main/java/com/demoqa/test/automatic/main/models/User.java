@@ -1,13 +1,13 @@
-package models;
+package com.demoqa.test.automatic.main.models;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-	String firstName;
-	String lastName;
-	String completeName;
-	String username;
+	private String firstName;
+	private String lastName;
+	private String completeName;
+	private String username;
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -20,7 +20,7 @@ public class User {
 		return completeName;
 	}
 
-	public User(String firstName, String lastName) {
+	private User(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -29,10 +29,9 @@ public class User {
 	public static List<User> returnListOfUsers(String[] names){
 		List<User> res=new ArrayList<User>();
 		String firstName,lastName;
-		String lowerCase="abcdefghijklmn�opqrstuvwxyz&";
-		for(int i=0;i<names.length;i++){
-			String nameToAdd=names[i];
-			String[]nameParts=nameToAdd.split(" ");
+		String lowerCase="abcdefghijklmnopqrstuvwxyz&";
+		for(String name:names){
+			String[]nameParts=name.split(" ");
 			firstName=nameParts[0]; //We suppose first part of the name is with upper case
 			int indexInsideName=1;
 			while(lowerCase.contains(nameParts[indexInsideName].charAt(0)+""))
@@ -41,7 +40,7 @@ public class User {
 			}
 			lastName=nameParts[indexInsideName];
 			User user=new User(firstName,lastName);
-			user.completeName=nameToAdd;
+			user.completeName=name;
 			res.add(user);
 		}
 		return res;

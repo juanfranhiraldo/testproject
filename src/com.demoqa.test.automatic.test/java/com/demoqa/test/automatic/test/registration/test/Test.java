@@ -1,4 +1,4 @@
-package registration.test;
+package com.demoqa.test.automatic.test.registration.test;
 
 
 
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import models.Date;
-import models.User;
+import com.demoqa.test.automatic.main.models.Date;
+import com.demoqa.test.automatic.main.models.User;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -18,15 +18,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.RandomizeData;
+import com.demoqa.test.automatic.main.utils.RandomizeData;
 
 public class Test {
-	static WebDriver driver;
-	final String[] names={"Jan van Dam", "Chack Norris", "Klark n Kent", "John Daw", "Bat Man", "Tim Los", "Dave o Core", "Pay Pal", "Lazy Cat", "Jack & Johnes"};
-	final List<User> users=User.returnListOfUsers(names);
-	static List<User> addedUsers=new ArrayList<User>();
+	private static WebDriver driver;
+	private final String[] names={"Jan van Dam", "Chack Norris", "Klark n Kent", "John Daw", "Bat Man", "Tim Los", "Dave o Core", "Pay Pal", "Lazy Cat", "Jack & Johnes"};
+	private final List<User> users=User.returnListOfUsers(names);
+	private static List<User> addedUsers=new ArrayList<User>();
 	@Before
-	public void setUpBeforeClass() throws Exception {
+	public void setUpBeforeClass() {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--start-maximized");
 		WebDriverManager.chromedriver().setup();
@@ -35,12 +35,12 @@ public class Test {
 	}
 
 	@After
-	public void tearDownAfterClass() throws Exception {
+	public void tearDownAfterClass()  {
 		driver.close();
 	}
 
 	@org.junit.Test
-	public void testConnection() throws InterruptedException{
+	public void testConnection() {
 		driver.get(" http://demoqa.com/registration/");
 		Assert.assertTrue(driver.getCurrentUrl().equals("http://demoqa.com/registration/"));
         registerUsers();
@@ -73,9 +73,9 @@ public class Test {
 
     private void resetHobbies() {
 		String[] hobbies={"dance","reading","cricket "};
-		for(int i=0;i<hobbies.length;i++){
-			if(driver.findElement(By.cssSelector("input[value='"+hobbies[i]+"']")).isSelected()){
-				driver.findElement(By.cssSelector("input[value='"+hobbies[i]+"']")).click();
+		for(String hobbie:hobbies){
+			if(driver.findElement(By.cssSelector("input[value='"+hobbie+"']")).isSelected()){
+				driver.findElement(By.cssSelector("input[value='"+hobbie+"']")).click();
 			}
 		}
 		
@@ -94,8 +94,8 @@ public class Test {
 		driver.findElement(By.cssSelector("input[value='"+RandomizeData.randomizeMarital()+"']")).click();
 		//Random hobbies
 		String randomHobbies[]=RandomizeData.randomizeHobbies();
-		for(int i=0;i<randomHobbies.length;i++){
-			driver.findElement(By.cssSelector("input[value='"+randomHobbies[i]+"']")).click();
+		for(String hobbie:randomHobbies){
+			driver.findElement(By.cssSelector("input[value='"+hobbie+"']")).click();
 		}
 		//Random country(First three letters which are common) and select
 		driver.findElement(By.id("dropdown_7")).click();
