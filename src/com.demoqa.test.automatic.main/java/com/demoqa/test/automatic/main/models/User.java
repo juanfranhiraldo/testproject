@@ -21,7 +21,12 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-	
+
+	/**
+	 *
+	 * @param names List of provided input names
+	 * @return Required not random data for an user(first name, last name) and a String with the whole name
+	 */
 	public static List<User> returnListOfUsers(String[] names){
 		List<User> res=new ArrayList<User>();
 		String firstName,lastName;
@@ -50,6 +55,7 @@ public class User {
 	public String getLastName() {
 		return lastName;
 	}
+
 
 	public boolean equals(Object u){
 		if(u instanceof User){

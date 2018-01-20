@@ -12,8 +12,8 @@ import com.demoqa.test.automatic.main.models.Date;
 import com.demoqa.test.automatic.main.models.User;
 import org.junit.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,6 +22,7 @@ import com.demoqa.test.automatic.main.utils.RandomizeData;
 
 public class Test {
 	private static WebDriver driver;
+	private static WebDriverWait  wait ;
 	private final String[] names={"Jan van Dam", "Chack Norris", "Klark n Kent", "John Daw", "Bat Man", "Tim Los", "Dave o Core", "Pay Pal", "Lazy Cat", "Jack & Johnes"};
 	private final List<User> users=User.returnListOfUsers(names);
 	private static final List<User> addedUsers=new ArrayList<User>();
@@ -51,17 +52,20 @@ public class Test {
             User user=registerRandomUser();
             addedUsers.add(user);
             resToPrint.remove(user.getCompleteName());
-            driver.findElement(By.cssSelector("input[name='pie_submit']")).click();
-            WebDriverWait wait = new WebDriverWait(driver, 20000);
+			wait = new WebDriverWait(driver,5);
+			WebElement element=wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[name='pie_submit']")));
+			element.click();
+            wait = new WebDriverWait(driver, 20000);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), 'Thank you for your registration')]")));
-            driver.findElement(By.id("name_3_firstname")).clear();
-            driver.findElement(By.id("name_3_lastname")).clear();
-            driver.findElement(By.id("phone_9")).clear();
-            driver.findElement(By.id("username")).clear();
-            driver.findElement(By.id("email_1")).clear();
-            driver.findElement(By.id("description")).clear();
-            driver.findElement(By.id("password_2")).clear();
-            driver.findElement(By.id("confirm_password_password_2")).clear();
+            wait = new WebDriverWait(driver,5);
+			clearElement("name_3_firstname");
+			clearElement("name_3_lastname");
+			clearElement("phone_9");
+            clearElement("username");
+            clearElement("email_1");
+            clearElement("description");
+            clearElement("password_2");
+            clearElement("confirm_password_password_2");
             resetHobbies();
         }
         for(String s:resToPrint){
@@ -69,8 +73,13 @@ public class Test {
         }
     }
 
+	public void clearElement(String elementIdentifier) {
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(elementIdentifier)));
+		element.clear();
+	}
 
-    private void resetHobbies() {
+
+	private void resetHobbies() {
 		String[] hobbies={"dance","reading","cricket "};
 		for(String hobbie:hobbies){
 			if(driver.findElement(By.cssSelector("input[value='"+hobbie+"']")).isSelected()){
@@ -87,8 +96,9 @@ public class Test {
 			userToAdd=users.get(r.nextInt(users.size()));
 		}
 		//User data
-		driver.findElement(By.id("name_3_firstname")).sendKeys(userToAdd.getFirstName());
-		driver.findElement(By.id("name_3_lastname")).sendKeys(userToAdd.getLastName());
+		wait = new WebDriverWait(driver,5);
+		typeDataInInputField("name_3_firstname",userToAdd.getFirstName());
+		typeDataInInputField("name_3_lastname",userToAdd.getLastName());
 		//Random marital status
 		driver.findElement(By.cssSelector("input[value='"+RandomizeData.randomizeMarital()+"']")).click();
 		//Random hobbies
@@ -97,26 +107,41 @@ public class Test {
 			driver.findElement(By.cssSelector("input[value='"+hobbie+"']")).click();
 		}
 		//Random country(First three letters which are common) and select
-		driver.findElement(By.id("dropdown_7")).click();
-		driver.findElement(By.id("dropdown_7")).sendKeys(RandomizeData.randomizeCountry());
-		driver.findElement(By.id("dropdown_7")).sendKeys(Keys.RETURN);
+		clickOnAnElementById("dropdown_7");
+		typeDataInInputField("dropdown_7", RandomizeData.randomizeCountry());
+		clickOnAnElementById("dropdown_7");
 		//Random date(even if wrong)
 		Date date=RandomizeData.randomizeDate();
-		driver.findElement(By.id("mm_date_8")).findElement(By.cssSelector("option[value='"+date.getMonth()+"'")).click();
-		driver.findElement(By.id("dd_date_8")).findElement(By.cssSelector("option[value='"+date.getDay()+"'")).click();
-		driver.findElement(By.id("yy_date_8")).findElement(By.cssSelector("option[value='"+date.getYear()+"'")).click();
+		clickOptionElementByCss("mm_date_8","option[value='"+date.getMonth()+"'");
+		clickOptionElementByCss("dd_date_8","option[value='"+date.getDay()+"'");
+		clickOptionElementByCss("yy_date_8","option[value='"+date.getYear()+"'");
 		//Random phone number between 10-20 digits
-		driver.findElement(By.id("phone_9")).sendKeys(RandomizeData.randomizePhoneNumber());
+		typeDataInInputField("phone_9",RandomizeData.randomizePhoneNumber());
 		//Random username between 5-15 characters
 		String username=RandomizeData.randomizeUserName();
-		driver.findElement(By.id("username")).sendKeys(username);
+		typeDataInInputField("username",username);
 		userToAdd.setUsername(username);
-		driver.findElement(By.id("email_1")).sendKeys(RandomizeData.randomizeEmail());
-		driver.findElement(By.id("description")).sendKeys(RandomizeData.randomAbout());
+		typeDataInInputField("email_1",RandomizeData.randomizeEmail());
+		typeDataInInputField("description",RandomizeData.randomAbout());
 		String password=RandomizeData.randomPassword();
-		driver.findElement(By.id("password_2")).sendKeys(password);
-		driver.findElement(By.id("confirm_password_password_2")).sendKeys(password);
+		typeDataInInputField("password_2",password);
+		typeDataInInputField("confirm_password_password_2",password);
 		return userToAdd;
+	}
+
+	private void clickOptionElementByCss(String listId,String cssSelector) {
+		WebElement element= wait.until(ExpectedConditions.elementToBeClickable(By.id(listId)));
+		element.findElement(By.cssSelector(cssSelector)).click();
+	}
+
+	private void clickOnAnElementById(String elementId) {
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(elementId)));
+		element.click();
+	}
+
+	private void typeDataInInputField(String elementId,String data) {
+		WebElement element=wait.until(ExpectedConditions.elementToBeClickable(By.id(elementId)));
+		element.sendKeys(data);
 	}
 
 }

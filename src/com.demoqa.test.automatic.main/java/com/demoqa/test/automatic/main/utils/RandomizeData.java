@@ -4,6 +4,7 @@ import com.demoqa.test.automatic.main.models.Date;
 
 import java.util.Random;
 
+//This class will randomize our data
 public class RandomizeData {
     private static final Random randomSeed = new Random(System.currentTimeMillis());
     private static final String LOWER_CASE = "abcdefghijklmnopqrstuvwxyz";
@@ -11,11 +12,21 @@ public class RandomizeData {
     private static final String LETTERS = LOWER_CASE+UPPER_CASE;
     private static final String NUMBERS = "0123456789";
     private  static final String ALPHABET = LOWER_CASE+UPPER_CASE+NUMBERS;
+
+    /** A method returning marital status
+     *
+     * @return A string representing a marital status
+     */
     public static String randomizeMarital(){ //Random marital status
         String[] marital={"single","married","divorced"};
         int value=randomSeed.nextInt(3);
         return marital[value];
     }
+
+    /**
+     * A method returning a random combination of hobbies
+      * @return A random combination of hobbies
+     */
     public static String[] randomizeHobbies(){
         String[] hobbies={"dance","reading","cricket "};
         int value=randomSeed.nextInt(3)+1;
@@ -29,6 +40,10 @@ public class RandomizeData {
         return finalHobbies;
     }
 
+    /**
+     * Generate a 3-char string in order to select a random country
+     * @return A 3-char string
+     */
     public static String randomizeCountry(){
         StringBuilder countryBuilder= new StringBuilder();
         String res;
@@ -39,6 +54,10 @@ public class RandomizeData {
         return res;
     }
 
+    /**
+     * Generate a random Date structure
+     * @return An element from customize Date class including day, month and year (after 1949)
+     */
     public static Date randomizeDate(){
         int month = randomSeed.nextInt(12)+1;
         int day = randomSeed.nextInt(31)+1;
