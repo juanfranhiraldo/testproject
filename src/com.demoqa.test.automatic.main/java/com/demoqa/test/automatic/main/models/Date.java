@@ -19,7 +19,8 @@ public class Date {
 
     /**
      * Date constructor for data filling.
-     * @param day day of our required date (No validation is done)
+     *
+     * @param day   day of our required date (No validation is done)
      * @param month month of our required date (No validation is done)
      * @param year  year of our required data(No validation is done)
      */
