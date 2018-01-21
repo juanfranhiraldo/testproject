@@ -1,5 +1,7 @@
 Used test framework: JUnit 4.12
+
 Used Selenium standalone server: Version 3.8.1.
+
 Compiled with JDK 9.0
 
 Other used libraries
