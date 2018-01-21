@@ -50,9 +50,7 @@ public class RandomizeData {
     public static String randomizeCountry() {
         StringBuilder countryBuilder = new StringBuilder();
         String res;
-        for (int i = 0; i < 3; i++) {
-            countryBuilder.append(LOWER_CASE.charAt(randomSeed.nextInt(LOWER_CASE.length())));
-        }
+        getARandomString(countryBuilder, LOWER_CASE, 3);
         res = countryBuilder.toString();
         return res;
     }
@@ -78,9 +76,7 @@ public class RandomizeData {
     public static String randomizePhoneNumber() {
         StringBuilder phoneBuilder = new StringBuilder();
         int phoneLength = randomSeed.nextInt(5) + 11;
-        for (int i = 0; i < phoneLength; i++) {
-            phoneBuilder.append(NUMBERS.charAt(randomSeed.nextInt(NUMBERS.length())));
-        }
+        getARandomString(phoneBuilder, NUMBERS, phoneLength);
         return phoneBuilder.toString();
     }
 
@@ -91,13 +87,10 @@ public class RandomizeData {
      */
     public static String randomizeUserName() {
         String letters = LETTERS;
-        String lettersAndNumbers = ALPHABET;
         int length = randomSeed.nextInt(10) + 5;
         String res = "" + letters.charAt(randomSeed.nextInt(letters.length()));
         StringBuilder userNameBuilder = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            userNameBuilder.append(lettersAndNumbers.charAt(randomSeed.nextInt(lettersAndNumbers.length())));
-        }
+        getARandomString(userNameBuilder, ALPHABET, length);
         return res + userNameBuilder.toString();
     }
 
@@ -114,25 +107,31 @@ public class RandomizeData {
         StringBuilder wordBuilder = new StringBuilder();
         int lengthFirstPart = randomSeed.nextInt(10) + 5;
         String letters = LETTERS;
-        String lettersAndNumbers = ALPHABET;
         firstPart = firstPart + letters.charAt(randomSeed.nextInt(letters.length()));
-        for (int i = 0; i < lengthFirstPart - 1; i++) {
-            wordBuilder.append(lettersAndNumbers.charAt(randomSeed.nextInt(lettersAndNumbers.length())));
-        }
+        getARandomString(wordBuilder, ALPHABET, lengthFirstPart - 1);
         firstPart = firstPart + wordBuilder.toString();
         wordBuilder.setLength(0);
         int lengthLastPart = randomSeed.nextInt(10) + 4;
-        for (int i = 0; i < lengthLastPart; i++) {
-            wordBuilder.append(letters.charAt(randomSeed.nextInt(letters.length())));
-        }
+        getARandomString(wordBuilder, letters, lengthLastPart);
         secondPart = wordBuilder.toString();
         wordBuilder.setLength(0);
-        for (int i = 0; i < 3; i++) {
-            wordBuilder.append(letters.charAt(randomSeed.nextInt(letters.length())));
-        }
+        getARandomString(wordBuilder, letters, 3);
         termination = "." + wordBuilder.toString();
         res = firstPart + "@" + secondPart + termination;
         return res;
+    }
+
+    /**
+     * Auxiliar method to obtain a random String
+     *
+     * @param wordBuilder       StringBuilder to store our String temporally
+     * @param lettersAndNumbers Main string to obtain random characters
+     * @param i2                Number of characters of the string
+     */
+    private static void getARandomString(StringBuilder wordBuilder, String lettersAndNumbers, int i2) {
+        for (int i = 0; i < i2; i++) {
+            wordBuilder.append(lettersAndNumbers.charAt(randomSeed.nextInt(lettersAndNumbers.length())));
+        }
     }
 
     /**
@@ -141,7 +140,7 @@ public class RandomizeData {
      * @return Random text
      */
     public static String randomAbout() {
-        String lettersAndNumbers = ALPHABET + " .:@,\\//";
+        String lettersAndNumbers = ALPHABET + " .:@,\n\\//";
         String res;
         int length = randomSeed.nextInt(300);
         StringBuilder resStringBuilder = new StringBuilder();
@@ -176,10 +175,9 @@ public class RandomizeData {
      * @param finalHobbies Selected hobbies
      */
     private static void addToRes(String[] hobbies, int i, String[] finalHobbies) {
-        Random r = new Random(System.currentTimeMillis());
-        int value = r.nextInt(3);
+        int value = randomSeed.nextInt(3);
         while (containing(hobbies[value], finalHobbies)) {
-            value = r.nextInt(3);
+            value = randomSeed.nextInt(3);
         }
         finalHobbies[i] = hobbies[value];
 

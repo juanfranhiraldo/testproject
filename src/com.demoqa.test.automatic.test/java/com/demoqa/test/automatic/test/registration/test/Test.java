@@ -74,22 +74,11 @@ public class Test {
         }
     }
 
-    private void clearElement(String elementIdentifier) {
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(elementIdentifier)));
-        element.clear();
-    }
 
-
-    private void resetHobbies() {
-        String[] hobbies = {"dance", "reading", "cricket "};
-        for (String hobbie : hobbies) {
-            if (driver.findElement(By.cssSelector("input[value='" + hobbie + "']")).isSelected()) {
-                driver.findElement(By.cssSelector("input[value='" + hobbie + "']")).click();
-            }
-        }
-
-    }
-
+    /**
+     * Register a random user.
+     * @return The registered user.
+     */
     private User registerRandomUser() {
         Random r = new Random(System.currentTimeMillis());
         User userToAdd = users.get(r.nextInt(users.size()));
@@ -130,19 +119,55 @@ public class Test {
         return userToAdd;
     }
 
+    /**
+     * Select an element by its css selector(used for dropdown elements/select).
+     * @param listId id from the dropdown
+     * @param cssSelector option from the dropdown.
+     */
     private void clickOptionElementByCss(String listId, String cssSelector) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(listId)));
         element.findElement(By.cssSelector(cssSelector)).click();
     }
 
+    /**
+     * Click on a web element.
+     * @param elementId "Id" from that element.
+     */
     private void clickOnAnElementById(String elementId) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(elementId)));
         element.click();
     }
 
+    /**
+     * Type data in an input element.
+     * @param elementId "id" from that element.
+     * @param data Data to be input.
+     */
     private void typeDataInInputField(String elementId, String data) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(elementId)));
         element.sendKeys(data);
+    }
+
+    /**
+     * Clear an input element.
+     * @param elementIdentifier "id" field from that element.
+     */
+    private void clearElement(String elementIdentifier) {
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(elementIdentifier)));
+        element.clear();
+    }
+
+    /**
+     * Deselect every hobby option in order to reset them.
+     */
+    private void resetHobbies() {
+        String[] hobbies = {"dance", "reading", "cricket "};
+        for (String hobbie : hobbies) {
+            if (driver.findElement(By.cssSelector("input[value='" + hobbie + "']")).isSelected()) {
+                driver.findElement(By.cssSelector("input[value='" + hobbie + "']")).click();
+            }
+        }
+
     }
 
 }
